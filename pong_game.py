@@ -2,19 +2,18 @@ import pygame
 import random
 import sys
 import time
+import json
 
 pygame.init()
 font = pygame.font.Font(None, 36)
 
 player_score = 0
-opponent_score = 0
-
-
-
-
+with open("configurations.json", "r") as json_file:
+    configurations = json.load(json_file)
+opponent_score = configurations.get("opponent_score", 0)
 
 def render_pong_game(surface):
-    surface.fill(bg_color)  # Fill the surface with the background color
+    surface.fill(bg_color)
 
     # Draw game elements on the surface
     pygame.draw.rect(surface, red, player)
@@ -23,11 +22,15 @@ def render_pong_game(surface):
     pygame.draw.aaline(surface, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
     font = pygame.font.Font(None, 36)
 
+
 def welcome_screen():
-    welcome_text = font.render('Welcome To Pong: First to 3 Wins', True, light_grey)
+    welcome_text = font.render('Welcome To Pong: First to 3 Wins', True, red)
+    game_info = font.render('Use Up/Down Arrow to Move Player', True, light_grey)
     screen.blit(welcome_text, (screen_width / 2 - 200, screen_height / 2 - 50))
+    screen.blit(game_info, (screen_width/2 -210, screen_height/2 - 10))
     pygame.display.flip()
-    time.sleep(3)
+    time.sleep(5)
+
 
 def display_scores():
     player_text = font.render(str(player_score), True, light_grey)
@@ -36,7 +39,6 @@ def display_scores():
     screen.blit(opponent_text, (20, 20))
     # Update the display
     pygame.display.flip()
-
 
 
 def ball_animation():
@@ -58,6 +60,15 @@ def ball_animation():
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
 
+
+with open("configurations.json", "r") as json_file:
+    configurations = json.load(json_file)
+
+player_color = configurations.get("player_color", (255, 0, 0))
+ball_color = configurations.get("ball_color", (255, 0, 0))
+opponent_color = configurations.get("opponent_color", (255, 0, 0))
+player_speed = configurations.get("player_speed", 0)
+opponent_speed = configurations.get("opponent_speed", 7)
 
 def player_animation():
     player.y += player_speed
@@ -107,7 +118,6 @@ blue = (0, 0, 255)
 ball_speed_x = 7 * random.choice((1, -1))
 ball_speed_y = 7 * random.choice((1, -1))
 
-opponent_speed = 7
 welcome_screen()
 
 
@@ -126,7 +136,7 @@ def end_game():
         game_over()
 
 
-player_speed = 0
+
 while True:
 
     for event in pygame.event.get():
@@ -150,9 +160,9 @@ while True:
 
     # Visuals
     screen.fill(bg_color)
-    pygame.draw.rect(screen, red, player)
-    pygame.draw.rect(screen, blue, opponent)
-    pygame.draw.ellipse(screen, green, ball)
+    pygame.draw.rect(screen, player_color, player)
+    pygame.draw.rect(screen, opponent_color, opponent)
+    pygame.draw.ellipse(screen, ball_color, ball)
     pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
     display_scores()
 
