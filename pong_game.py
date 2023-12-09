@@ -15,7 +15,6 @@ opponent_score = configurations.get("opponent_score", 0)
 def render_pong_game(surface):
     surface.fill(bg_color)
 
-    # Draw game elements on the surface
     pygame.draw.rect(surface, red, player)
     pygame.draw.rect(surface, blue, opponent)
     pygame.draw.ellipse(surface, green, ball)
@@ -37,7 +36,6 @@ def display_scores():
     opponent_text = font.render(str(opponent_score), True, light_grey)
     screen.blit(player_text, (screen_width - 50, 20))
     screen.blit(opponent_text, (20, 20))
-    # Update the display
     pygame.display.flip()
 
 
@@ -158,7 +156,6 @@ while True:
     opponent_ai()
     end_game()
 
-    # Visuals
     screen.fill(bg_color)
     pygame.draw.rect(screen, player_color, player)
     pygame.draw.rect(screen, opponent_color, opponent)
