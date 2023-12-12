@@ -28,7 +28,7 @@ Testing Procedures: Detailed instructions on how to test your application.
 
 
  #To test the application, simply keep changing the settings and play the game. Keep returning back to the local host streamlit page and change the settings 
- #to your heart's desire, and then go back and rerun pong_game.py.
+ to your heart's desire, and then go back and rerun pong_game.py.
  
 Contributions and Acknowledgments: If applicable, list any collaborators or sources.
 
